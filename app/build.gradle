@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 29
     buildToolsVersion '29.0.2'
 
     defaultConfig {
         applicationId 'ru.meefik.linuxdeploy'
         minSdkVersion 21
         // API 28 must be frozen for binary execution
-        targetSdkVersion 31
+        targetSdkVersion 28
         versionCode 259
         versionName "2.6.0"
         vectorDrawables.useSupportLibrary true
