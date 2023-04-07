@@ -32,3 +32,13 @@ jobs:
         with:
           name: termux-x11
           path: ./app/build/outputs/apk/release
+
+  validation:
+    name: "Validation"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - uses: gradle/wrapper-validation-action@v1
+
