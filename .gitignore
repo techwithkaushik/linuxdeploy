@@ -36,9 +36,6 @@ captures/
 *.iml
 .idea/
 
-# Keystore files
-*.jks
-
 # Mac OS X clutter
 *.DS_Store
 
