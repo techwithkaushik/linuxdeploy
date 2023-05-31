@@ -335,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements
                             if (PrefStore.isXserver(getApplicationContext())
                                     && PrefStore.isXsdl(getApplicationContext())) {
                                 PackageManager pm = getPackageManager();
-                                Intent intent = pm.getLaunchIntentForPackage("x.org.server");
+                                Intent intent = pm.getLaunchIntentForPackage("com.termux.x11");
                                 if (intent != null) startActivity(intent);
                                 h.postDelayed(() -> EnvUtils.execService(getBaseContext(), "start", "-m"), PrefStore.getXsdlDelay(getApplicationContext()));
                             } else if (PrefStore.isFramebuffer(getApplicationContext())) {
