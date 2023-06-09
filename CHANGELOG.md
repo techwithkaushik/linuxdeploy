@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [2.7.0] - 2023-06-09
+### Changed
+- add new version of `debian` and `ubuntu`
+- add release workflow for automate release apk
+- change file sign
+
 ## [2.6.0] - 2020-02-01
 ### Changed
 - Set target version of SDK to 28 for binary execution in Android Q
