@@ -86,7 +86,7 @@
     <string name="fb_freeze" translatable="false">none</string>
 
     <!-- Debian -->
-    <string name="debian_suite" translatable="false">bullseye</string>
+    <string name="debian_suite" translatable="false">bookworm</string>
     <!-- arm -->
     <string name="arm_debian_source_path" translatable="false">http://ftp.debian.org/debian/</string>
     <string name="arm_debian_arch" translatable="false">armhf</string>
