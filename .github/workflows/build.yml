@@ -1,0 +1,65 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main" ]
+    paths-ignore: [ '**.md' ]
+
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore: [ '**.md' ]
+
+jobs:
+  validation:
+    name: Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: gradle/wrapper-validation-action@v1
+                                      
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Decode Keystore
+        id: keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'dev_keystore.jks'
+          encodedString: ${{ secrets.SIGNING_KEYSTORE }}
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+            path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+
+            restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: assembleDebug
+        run: bash ./gradlew assembleDebug
+        env:
+          SIGNING_KEY_STORE: ${{ steps.keystore.outputs.filePath }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-deploy-app
+          path: app/build/outputs/apk/debug/**.apk
