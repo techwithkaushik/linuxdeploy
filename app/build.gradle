@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'ru.meefik.linuxdeploy'
-    compileSdk 29
+    compileSdk 34
 
     defaultConfig {
         applicationId 'ru.meefik.linuxdeploy'
