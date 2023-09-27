@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    namespace 'ru.meefik.linuxdeploy'
+    compileSdk 29
 
     defaultConfig {
         applicationId 'ru.meefik.linuxdeploy'
         minSdkVersion 21
         // API 28 must be frozen for binary execution
         targetSdkVersion 28
-        versionCode 260
+        versionCode 270
         versionName "2.7.0"
         vectorDrawables.useSupportLibrary true
     }
