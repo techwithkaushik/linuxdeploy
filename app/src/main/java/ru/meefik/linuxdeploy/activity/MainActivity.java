@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -35,9 +34,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import com.google.android.material.navigation.NavigationView;
-
 import ru.meefik.linuxdeploy.EnvUtils;
 import ru.meefik.linuxdeploy.Logger;
 import ru.meefik.linuxdeploy.PrefStore;
@@ -178,42 +175,30 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_start:
-                containerStart(null);
-                break;
-            case R.id.menu_stop:
-                containerStop(null);
-                break;
-            case R.id.menu_properties:
-                containerProperties(null);
-                break;
-            case R.id.menu_install:
-                containerDeploy();
-                break;
-            case R.id.menu_configure:
-                containerConfigure();
-                break;
-            case R.id.menu_export:
-                containerExport();
-                break;
-            case R.id.menu_status:
-                containerStatus();
-                break;
-            case R.id.menu_clear:
-                clearLog();
-                break;
-            case android.R.id.home:
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
-                } else {
-                    drawer.openDrawer(GravityCompat.START);
-                }
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if(itemId == R.id.menu_start)
+            containerStart(null);
+        else if(itemId == R.id.menu_stop)
+            containerStop(null);
+        else if(itemId == R.id.menu_properties)
+            containerProperties(null);
+        else if(itemId == R.id.menu_install)
+            containerDeploy();
+        else if(itemId == R.id.menu_configure)
+            containerConfigure();
+        else if(itemId == R.id.menu_export)
+            containerExport();
+        else if(itemId == R.id.menu_status)
+            containerStatus();
+        else if(itemId == R.id.menu_clear)
+            clearLog();
+        else if(itemId == android.R.id.home){
+            if(drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }else{
+                drawer.openDrawer(GravityCompat.START);
+            }
         }
-
         return true;
     }
 
@@ -228,15 +213,15 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.nav_profiles:
-                Intent intent_profiles = new Intent(this, ProfilesActivity.class);
-                startActivity(intent_profiles);
-                break;
-            case R.id.nav_repository:
+        int itemId = item.getItemId();
+        if(itemId == R.id.nav_profiles){
+            Intent intent_profiles = new Intent(this, ProfilesActivity.class);
+            startActivity(intent_profiles);
+        }
+        else if(itemId == R.id.nav_repository){
                 openRepository();
-                break;
-            case R.id.nav_terminal:
+        }
+        else if(itemId == R.id.nav_terminal){
                 String uri = "http://127.0.0.1:" + PrefStore.getHttpPort(this) +
                         "/cgi-bin/terminal?size=" + PrefStore.getFontSize(this);
                 // Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
@@ -249,24 +234,23 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(uri));
-                break;
-            case R.id.nav_settings:
+        }
+        else if(itemId == R.id.nav_settings){
                 Intent intent_settings = new Intent(this, SettingsActivity.class);
                 startActivity(intent_settings);
-                break;
-            case R.id.nav_about:
+                }
+        else if(itemId == R.id.nav_about){
                 Intent intent_about = new Intent(this, AboutActivity.class);
                 startActivity(intent_about);
-                break;
-            case R.id.nav_exit:
+                }
+        else if(itemId == R.id.nav_exit){
                 if (wifiLock.isHeld()) wifiLock.release();
                 if (wakeLock.isHeld()) wakeLock.release();
                 EnvUtils.execServices(getBaseContext(), new String[]{"telnetd", "httpd"}, "stop");
                 PrefStore.hideNotification(getBaseContext());
                 finish();
-                break;
         }
-
+        
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -449,16 +433,16 @@ public class MainActivity extends AppCompatActivity implements
      * Request permission for write to storage
      */
     private void updateEnvWithRequestPermissions() {
-        boolean hasPermission = (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermission) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
-        } else {
-            new UpdateEnvTask(this).execute();
-        }
+        if(checkPermission()) new UpdateEnvTask(this).execute();
+        else ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE);
     }
-
+    
+    private boolean checkPermission(){
+            int read = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
+            int writeCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return read == PackageManager.PERMISSION_GRANTED && writeCheck == PackageManager.PERMISSION_GRANTED;
+    }
+    
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

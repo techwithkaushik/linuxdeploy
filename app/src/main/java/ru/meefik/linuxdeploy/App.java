@@ -15,6 +15,7 @@ public class App extends Application {
 
         // Create notification channels for Oreo and newer
         createNotificationChannels();
+        
     }
 
     private void createNotificationChannels() {

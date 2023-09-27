@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-dontwarn okhttp3.internal.platform.**
+-keep class com.hjq.permissions.** {*;}
+#-dontwarn org.conscrypt.**
+#-dontwarn org.bouncycastle.**
+#-dontwarn org.openjsse.**
+#-dontwarn org.slf4j.impl.StaticLoggerBinder

@@ -8,9 +8,8 @@ android {
 
     defaultConfig {
         applicationId 'ru.meefik.linuxdeploy'
-        minSdkVersion 21
-        // API 28 must be frozen for binary execution
-        targetSdkVersion 28
+        minSdk 21
+        targetSdk 28
         versionCode 270
         versionName "2.7.0"
         vectorDrawables.useSupportLibrary true
@@ -44,6 +43,10 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    
+    buildFeatures {
+        buildConfig true
+    }
 
     lintOptions {
         disable 'MissingTranslation'
@@ -54,7 +57,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    buildToolsVersion '30.0.3'
 }
 
 dependencies {
@@ -64,4 +66,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.squareup.okhttp3:okhttp:4.3.1'
     implementation 'androidx.preference:preference:1.1.0'
+    
+    implementation 'com.guolindev.permissionx:permissionx:1.7.1'
 }
