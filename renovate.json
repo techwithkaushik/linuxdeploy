@@ -16,6 +16,7 @@
     {
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["major"],
+      "automerge": true,
       "labels": ["dependencies", "breaking"]
     }
   ]
