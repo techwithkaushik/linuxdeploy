@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      with:
+        with:
           submodules: recursive
 
       - uses: gradle/wrapper-validation-action@v1
