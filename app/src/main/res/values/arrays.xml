@@ -306,8 +306,7 @@
         <item>focal</item>
         <item>impish</item>
         <item>jammy</item>
-        <item>kinetic</item>
-        <item>lunar</item>
+        <item>mantic</item>
     </string-array>
     <string-array name="ubuntu_arch_values" translatable="false">
         <item>armel</item> <!-- precise only -->
