@@ -18,7 +18,7 @@ jobs:
         with:
           submodules: recursive
 
-      - uses: gradle/wrapper-validation-action@v2
+      - uses: gradle/wrapper-validation-action@v3
 
   build:
     name: Build APK
