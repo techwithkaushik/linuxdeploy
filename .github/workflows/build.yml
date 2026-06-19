@@ -32,7 +32,7 @@ jobs:
 
       - name: Decode Keystore
         id: keystore
-        uses: timheuer/base64-to-file@v1.2
+        uses: timheuer/base64-to-file@v2.0
         with:
           fileName: 'dev_keystore.jks'
           encodedString: ${{ secrets.SIGNING_KEYSTORE }}
